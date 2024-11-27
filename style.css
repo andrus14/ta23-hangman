@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 2rem;
+    font-size: 2rem;
+}
+
+#message {
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+    color: red;
+    margin-top: 2rem;
+    height: 2.5rem;
+}
+
+#word {
+    letter-spacing: 0.4rem;
+    word-spacing: 0.8rem;
+}
+
+#alphabet {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 400px;
+    margin: 2rem auto;
+}
+
+.letter {
+    height: 32px;
+    width: 32px;
+    border: 1px solid black;
+    margin: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.correct-letter {
+    color: blue;
+    font-weight: bold;
+}
+
+.wrong-letter {
+    color: red;
+    font-weight: bold;
+}
