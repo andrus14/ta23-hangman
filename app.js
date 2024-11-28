@@ -4,16 +4,20 @@ const messageDiv = document.getElementById('message');
 const alphabetDiv = document.getElementById('alphabet');
 
 let score = 10;
-const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+const alphabet = 'abdefghijklmnoprsšzžtuvõäöü'.split('');
 let guessedLetters = [];
-let word = 'KURESSAARE AMETIKOOL';
-let guess = word.replace(/[a-zA-Z]/g, "_");
+let word = await getRandomWord();
+let guess = word.replace(/[ABDEFGHIJKLMNOPRSŠZŽTUVÕÄÖÜ]/g, "_");
 
 alphabet.forEach( c => {
     const letterDiv = document.createElement('div');
     letterDiv.setAttribute('id', c);
     letterDiv.classList.add('letter');
     letterDiv.innerText = c.toUpperCase();
+
+    letterDiv.addEventListener('click', e => {
+        testLetter(c);
+    });
 
     alphabetDiv.appendChild(letterDiv);
 });
@@ -22,7 +26,11 @@ wordDiv.innerText = guess;
 scoreDiv.innerText = score;
 
 document.addEventListener('keydown', e => {
-    let letter = e.key;
+    testLetter(e.key);
+});
+
+function testLetter ( letter ) {
+
     if ( alphabet.includes(letter) && !guessedLetters.includes(letter) && score ) {
 
         guessedLetters.push(letter);
@@ -52,7 +60,7 @@ document.addEventListener('keydown', e => {
             scoreDiv.innerText = score;
             
             if ( !score ) {
-                messageDiv.innerText = 'Mäng läbi!';
+                messageDiv.innerHTML = 'Mäng läbi!<br>Õige sõna oli ' + word;
             }
             
             guessedLetterDiv.classList.add('wrong-letter');
@@ -60,4 +68,16 @@ document.addEventListener('keydown', e => {
         }
 
     } 
-});
+}
+
+async function getRandomWord () {
+
+    const response = await fetch('hangman.txt');
+    let words = await response.text();
+
+    words = words.split('\n');
+    const word = words[Math.floor(Math.random() * words.length)];
+
+    return word.toUpperCase();
+
+}
